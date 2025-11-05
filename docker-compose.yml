@@ -5,8 +5,8 @@ services:
     command: python manage.py runserver 0.0.0.0:8000
     volumes:
       - .:/app
-      - /path/to/input:/input  # Mount host input
-      - /path/to/output:/output  # Mount host output
+      - /host/input:/input
+      - /host/output:/output
     ports:
       - "8000:8000"
     depends_on:
@@ -17,11 +17,11 @@ services:
 
   worker:
     build: .
-    command: celery -A autobook worker --loglevel=info
+    command: celery -A autobook worker -l info
     volumes:
       - .:/app
-      - /path/to/input:/input
-      - /path/to/output:/output
+      - /host/input:/input
+      - /host/output:/output
     depends_on:
       - redis
     environment:
@@ -30,3 +30,6 @@ services:
 
   redis:
     image: redis:alpine
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s

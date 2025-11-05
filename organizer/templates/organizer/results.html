@@ -1,7 +1,26 @@
 {% extends "organizer/base.html" %}
 
 {% block content %}
-<h1>Job Results</h1>
-<p>Status: {{ job.status }}</p>
-<!-- Add preview table: before/after, metadata -->
+<h1>Job #{{ job.id }} Results</h1>
+<p>Status: <span id="status">{{ job.status }}</span></p>
+<div class="progress">
+    <div id="progress-bar" class="progress-bar" role="progressbar" style="width: 0%"></div>
+</div>
+<div id="logs"></div>
+
+<script>
+    var ws = new WebSocket('ws://' + window.location.host + '/ws/job/{{ job.id }}/');
+    ws.onmessage = function(e) {
+        var data = JSON.parse(e.data);
+        $('#progress-bar').css('width', data.progress + '%');
+        $('#logs').append('<p>' + data.message + '</p>');
+        if (data.progress == 100) {
+            $('#status').text('Completed');
+        }
+    };
+    // Poll logs initially
+    $.get('/logs/{{ job.id }}/', function(data) {
+        data.forEach(log => $('#logs').append('<p>' + log.message + '</p>'));
+    });
+</script>
 {% endblock %}

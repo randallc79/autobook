@@ -2,6 +2,18 @@
 a Dockerized web app that automates audiobook organization end-to-end.
 
 # AutoBook
-Ultimate audiobook organizer. Run `docker-compose up`, access http://localhost:8000.
+The ultimate, automated audiobook organizer that makes others obsolete. Dockerized web app for messy-to-clean conversion.
 
-Mount /input and /output volumes as needed.
+## Features
+- Auto-group flat files, multi-source metadata (Audible, Google Books, OpenLibrary, beets).
+- M4B conversion with chapters/covers.
+- Real-time UI progress, uploads, logs.
+- Structured output for Audiobookshelf.
+
+## Installation
+1. `docker-compose up -d`
+2. Access http://localhost:8000
+3. Mount /input and /output as needed.
+4. Optional env: ABS_URL and ABS_API_KEY for Audiobookshelf integration.
+
+Run `python manage.py migrate` first time.

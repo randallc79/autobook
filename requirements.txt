@@ -1,10 +1,13 @@
 django
+django-channels
+channels_redis
 celery
 redis
 requests
 beautifulsoup4
 mutagen
 beets
-beets-audible  # Via pip
-m4b-merge  # Via pip
+beets-audible
+m4b-merge
 gunicorn
+uvicorn

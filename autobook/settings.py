@@ -47,6 +47,16 @@ TEMPLATES = [
     },
 ]
 
+ASGI_APPLICATION = 'autobook.asgi.application'
+CHANNEL_LAYERS = {
+    'default': {
+        'BACKEND': 'channels_redis.core.RedisChannelLayer',
+        'CONFIG': {
+            "hosts": [('redis', 6379)],
+        },
+    },
+}
+
 WSGI_APPLICATION = 'autobook.wsgi.application'
 
 DATABASES = {

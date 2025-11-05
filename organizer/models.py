@@ -5,3 +5,8 @@ class Job(models.Model):
     output_path = models.CharField(max_length=255)
     status = models.CharField(max_length=50, default='pending')
     created_at = models.DateTimeField(auto_now_add=True)
+
+class Log(models.Model):
+    job = models.ForeignKey(Job, on_delete=models.CASCADE)
+    message = models.TextField()
+    timestamp = models.DateTimeField(auto_now_add=True)
