@@ -1,0 +1,10 @@
+{% extends "organizer/base.html" %}
+
+{% block content %}
+<h1>AutoBook Organizer</h1>
+<form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit" class="btn btn-primary">Process</button>
+</form>
+{% endblock %}

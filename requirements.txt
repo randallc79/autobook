@@ -1,0 +1,10 @@
+django
+celery
+redis
+requests
+beautifulsoup4
+mutagen
+beets
+beets-audible  # Via pip
+m4b-merge  # Via pip
+gunicorn
