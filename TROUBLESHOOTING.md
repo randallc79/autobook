@@ -12,11 +12,15 @@ apt -y install pipx
 apt -y install ffmpeg
 
 git clone https://github.com/patricker/m4binder.git
+cd /opt/m4binder && pip install -r requirements.txt
+
 
 python3 -m venv /opt/autobook_venv
 source /opt/autobook_venv/bin/activate
 pip install requests beautifulsoup4 tqdm mutagen
 pip install m4b-merge
+
+git -C /opt/autobook pull && cp /opt/autobook/autobook-cli/* .
 
 python3 autobook-v2.2.py --m4binder_path /opt/m4binder/m4binder.py
 
