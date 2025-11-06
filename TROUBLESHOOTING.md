@@ -10,6 +10,7 @@ docker compose up -d
 apt update && sudo apt install python3 python3-pip -y
 apt -y install pipx
 apt -y install ffmpeg
+apt -y install ffmpeg mp4v2-utils fdkaac php-cli php-intl php-json php-dom
 
 git clone https://github.com/patricker/m4binder.git
 cd /opt/m4binder && pip install -r requirements.txt
@@ -22,7 +23,7 @@ pip install m4b-merge
 
 git -C /opt/autobook pull && cp /opt/autobook/autobook-cli/* .
 
-python3 autobook-v2.2.py --m4binder_path /opt/m4binder/m4binder.py
+python3 autobook-v2.5.py --m4binder_path /opt/m4binder/m4binder.py
 
 deactivate
 
