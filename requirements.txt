@@ -1,6 +1,4 @@
 django
-django-channels
-channels_redis
 celery
 redis
 requests
