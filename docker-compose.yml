@@ -9,26 +9,44 @@ services:
     ports:
       - "8000:8000"
     depends_on:
-      - redis
+      redis:
+        condition: service_healthy
     environment:
-      - CELERY_BROKER=redis://redis:6379/0
-      - CELERY_BACKEND=redis://redis:6379/0
+      - CELERY_BROKER_URL=redis://redis:6379/0
+      - CELERY_RESULT_BACKEND=redis://redis:6379/0
+      - CHANNEL_LAYERS_DEFAULT_BACKEND=channels_redis.core.RedisChannelLayer
+      - CHANNEL_LAYERS_DEFAULT_CONFIG_HOSTS=[('redis', 6379)]
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
 
   worker:
     build: .
-    command: celery -A autobook worker -l info
+    command: celery -A autobook worker --loglevel=info
     volumes:
       - .:/app
       - /opt/sort:/input
       - /opt/done:/output
     depends_on:
-      - redis
+      redis:
+        condition: service_healthy
     environment:
-      - CELERY_BROKER=redis://redis:6379/0
-      - CELERY_BACKEND=redis://redis:6379/0
+      - CELERY_BROKER_URL=redis://redis:6379/0
+      - CELERY_RESULT_BACKEND=redis://redis:6379/0
+    healthcheck:
+      test: ["CMD", "celery", "-A", "autobook", "status"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
 
   redis:
     image: redis:alpine
     healthcheck:
       test: ["CMD", "redis-cli", "ping"]
       interval: 5s
+      timeout: 3s
+      retries: 5
+volumes:
+  - db_data:/app/db.sqlite3
