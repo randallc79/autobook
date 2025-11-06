@@ -6,3 +6,5 @@ docker exec -it autobook-web-1 python manage.py migrate
 docker compose down
 docker compose build
 docker compose up -d
+
+apt update && sudo apt install python3 python3-pip -y
