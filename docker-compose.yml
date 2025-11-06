@@ -5,8 +5,8 @@ services:
     command: python manage.py runserver 0.0.0.0:8000
     volumes:
       - .:/app
-      - /host/input:/input
-      - /host/output:/output
+      - /opt/sort:/input
+      - /opt/done:/output
     ports:
       - "8000:8000"
     depends_on:
@@ -20,8 +20,8 @@ services:
     command: celery -A autobook worker -l info
     volumes:
       - .:/app
-      - /host/input:/input
-      - /host/output:/output
+      - /opt/sort:/input
+      - /opt/done:/output
     depends_on:
       - redis
     environment:
