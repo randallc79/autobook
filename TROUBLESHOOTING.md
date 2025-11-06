@@ -9,6 +9,8 @@ docker compose up -d
 
 apt update && sudo apt install python3 python3-pip -y
 apt -y install pipx
+apt -y install ffmpeg
+
 git clone https://github.com/patricker/m4binder.git
 
 python3 -m venv /opt/autobook_venv
